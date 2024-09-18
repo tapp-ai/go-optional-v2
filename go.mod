@@ -1,6 +1,6 @@
 module github.com/tapp-ai/go-optional-v2
 
-go 1.22.3
+go 1.21
 
 require github.com/stretchr/testify v1.9.0
 
