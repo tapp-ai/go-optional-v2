@@ -234,3 +234,11 @@ func (o *Option[T]) UnmarshalJSON(data []byte) error {
 	*o = Some(v)
 	return nil
 }
+
+// FromNillable converts a nillable value to an Option.
+func (o Option[T]) FromNillable(v *T) Option[T] {
+	if v == nil {
+		return None[T]()
+	}
+	return Some(*v)
+}
