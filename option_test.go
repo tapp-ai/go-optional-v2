@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/tapp-ai/go-optional-v2"
+	optionalv2 "github.com/tapp-ai/go-optional-v2"
 )
 
 // Custom type for testing fmt.Stringer interface
@@ -32,6 +32,20 @@ func TestOption(t *testing.T) {
 		optNone := optionalv2.None[int]()
 		assert.False(t, optNone.IsSome())
 		assert.True(t, optNone.IsNone())
+	})
+
+	// Test FromNillable method
+	t.Run("FromNillable", func(t *testing.T) {
+		var value *int = nil
+		opt := optionalv2.FromNillable(value)
+		assert.False(t, opt.IsSome())
+		assert.True(t, opt.IsNone())
+
+		value = new(int)
+		*value = 42
+		opt = optionalv2.FromNillable(value)
+		assert.True(t, opt.IsSome())
+		assert.Equal(t, 42, opt.Unwrap())
 	})
 
 	// Test Unwrap and UnwrapAsPtr methods

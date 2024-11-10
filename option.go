@@ -56,6 +56,14 @@ func None[T any]() Option[T] {
 	return map[bool]T{}
 }
 
+// FromNillable converts a nillable value to an Option.
+func FromNillable[T any](v *T) Option[T] {
+	if v == nil {
+		return None[T]()
+	}
+	return Some(*v)
+}
+
 // IsSome returns whether the Option has a value or not.
 func (o Option[T]) IsSome() bool {
 	return len(o) != 0
@@ -233,12 +241,4 @@ func (o *Option[T]) UnmarshalJSON(data []byte) error {
 	}
 	*o = Some(v)
 	return nil
-}
-
-// FromNillable converts a nillable value to an Option.
-func (o Option[T]) FromNillable(v *T) Option[T] {
-	if v == nil {
-		return None[T]()
-	}
-	return Some(*v)
 }
